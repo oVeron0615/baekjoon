@@ -1,49 +1,35 @@
 #include <iostream>
-#include <vector>
 #include <array>
 using namespace std;
 
-void bruteforce(int N, int S, int cnt, int loc, int &c, array<int, 20> &arr, vector<int> &partArr);
-
 int main()
 {
-	int N, S, i, n, c{ 0 };
+	int N, S;
 	array<int, 20> arr;
-	vector<int> partArr;
 	cin >> N >> S;
 
-	for (i = 0; i < N; i++)
-	{
-		cin >> arr[i];
-	}
+	for (int i{ 0 }; i < N; i++) cin >> arr[i];
 
-	for (i = 0; i < N; i++)
+	int ans{ 0 };
+	for (int i{ 1 }; i < (1 << N); i++)
 	{
-		bruteforce(N, S, i + 1, 0, c, arr, partArr);
-	}
-	cout << c;
-}
-
-void bruteforce(int N, int S, int cnt, int loc, int& c, array<int, 20>& arr, vector<int>& partArr)
-{
-	int i;
-	if (cnt == 0)
-	{
-		int sum = 0;
-		for (i = 0; i < partArr.size(); i++)
+		int sum{ 0 };
+		for (int j{ 0 }; j < N; j++)
 		{
-			sum += partArr[i];
-			cout << partArr[i] << " ";
+			if (i & (1 << j)) sum += arr[j];
 		}
-		cout << endl;
-		if (sum == S) c++;
+		if (sum == S) ans++;
 	}
-	else if (loc == N) return;
 
-	for (i = loc; i < N; i++)
-	{
-		partArr.push_back(arr[i]);
-		bruteforce(N, S, cnt - 1, i + 1, c, arr, partArr);
-		partArr.pop_back();
-	}
+	cout << ans;
 }
+
+//비트마스킹 : 비트 연산을 이용한 배열 표기법
+//line14 : 1부터 2의 N승 - 1까지 조사(00001 ~ 11111)
+//line19 : 1을 j만큼 밀어서 그 자리에 1이 있으면 1을 연산, 아니면 0 연산
+/*
+i : 0 0 1 1 0
+j : 0 0 1 0 0
+답: 0 0 1 0 0 - 0아니므로 참
+똑같이 1이면 해당 인덱스에 속하는 원소가 존재한다는 뜻
+*/
