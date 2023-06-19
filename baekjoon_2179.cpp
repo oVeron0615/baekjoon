@@ -7,9 +7,9 @@ typedef pair<ll, ll> pll;
 typedef tuple<int, int, int> tii;
 
 int N;
-int mxLen = 0;
 string key = "";
 unordered_map<string, vector<string>> prefix;
+unordered_map<string, int> fm;
 
 int main()
 {
@@ -29,12 +29,16 @@ int main()
                 prefix.insert({p, vector<string>()});
 
             if (prefix[p].size() < 2)
-                prefix[p].push_back(w);
-
-            if (prefix[p].size() == 2 && mxLen < p.size())
             {
-                mxLen = p.size();
-                key = p;
+                prefix[p].push_back(w);
+                if (fm.find(p) == fm.end())
+                    fm.insert({p, i});
+            }
+
+            if (prefix[p].size() == 2)
+            {
+                if (key.size() < p.size() || key.size() == p.size() && fm[key] > fm[p])
+                    key = p;
             }
         }
     }
