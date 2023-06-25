@@ -23,7 +23,7 @@ tii cmp(tii tup, tii ntup)
     return tup;
 }
 
-void solve2(int idx)
+void DFS(int idx)
 {
     auto [sx, bx, sy, by] = rect[idx];
     cache[idx] = 1;
@@ -40,7 +40,7 @@ void solve2(int idx)
             else if (board[i][j] != 'A' + idx)
             {
                 if (cache[board[i][j] - 'A'] == 0)
-                    solve2(board[i][j] - 'A');
+                    DFS(board[i][j] - 'A');
                 else if (cache[board[i][j] - 'A'] == 1)
                 {
                     isSafe = false;
@@ -55,7 +55,7 @@ void solve2(int idx)
     cache[idx] = 2;
 }
 
-void solve1()
+void solve()
 {
     fill(rect, rect + 26, make_tuple(inf, -inf, inf, -inf));
     memset(cache, 0, sizeof(cache));
@@ -77,7 +77,7 @@ void solve1()
     {
         if (rect[i] == make_tuple(inf, -inf, inf, -inf) || cache[i] == 2)
             continue;
-        solve2(i);
+        DFS(i);
 
         if (!isSafe)
             break;
@@ -97,5 +97,5 @@ int main()
     int T;
     cin >> T;
     while (T--)
-        solve1();
+        solve();
 }
