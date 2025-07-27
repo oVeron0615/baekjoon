@@ -1,0 +1,19 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+typedef pair<int, int> pii;
+typedef pair<ll, ll> pll;
+typedef tuple<int, int, int> tii;
+
+int main()
+{
+	ios::sync_with_stdio(0);
+	cin.tie(0), cout.tie(0);
+    
+    int A, B, C; cin >> A >> B >> C;
+    cout << A + B - C << "\n"
+        << stoi(to_string(A) + to_string(B)) - C;
+    //to_string : 숫자 -> 문자열
+    //stoi : 문자열 -> int
+}
