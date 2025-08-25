@@ -12,6 +12,64 @@ int n;
 
 struct line
 {
+	ll sl, ic;
+	double start;
+};
+vector<line> lines;
+
+int main()
+{
+	ios::sync_with_stdio(0);
+	cin.tie(0), cout.tie(0);
+
+	cin >> n;
+	for(int i=1; i<=n; i++) cin >> a[i];
+	for(int i=1; i<=n; i++) cin >> b[i];
+
+	int idx = 0;
+	lines.push_back({b[1], 0, 0.0});
+	for(int i=2; i<=n; i++)
+	{
+		while(idx < lines.size() && lines[idx].start <= a[i]) idx++;
+		line res = lines[idx-1];
+
+		dp[i] = res.sl * a[i] + res.ic;
+		line l1 = {b[i], dp[i], 0.0};
+
+		while(true)
+		{
+			line l2 = lines.back();
+			double cross = (double)(l2.ic - l1.ic) / (l1.sl - l2.sl);
+			if(cross <= l2.start)
+			{
+				lines.pop_back();
+				continue;
+			}
+
+			l1.start = cross;
+			lines.push_back(l1);
+			break;
+		}
+	}
+
+	cout << dp[n];
+}
+
+/*
+#include <bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+typedef pair<int, int> pii;
+typedef pair<ll, ll> pll;
+
+const int MAXN = 100'001;
+ll a[MAXN], b[MAXN];
+ll dp[MAXN];
+int n;
+
+struct line
+{
 	ll sl, ic; //기울기, 절편
 	double start; //선분의 시작점의 x좌표
 };
@@ -56,3 +114,4 @@ int main()
 
 	cout << dp[n];
 }
+*/
