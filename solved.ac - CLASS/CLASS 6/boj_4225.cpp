@@ -18,7 +18,7 @@ double CCW(coord p1, coord p2, coord p3)
 	return (conj(p12) * p23).imag();
 }
 
-double calDist(coord p1, coord p2, coord p3)
+double calDist(coord p1, coord p2, coord p3) //점과 직선 사이의 거리
 {
 	double A = p2.imag() - p3.imag(), B = p3.real() - p2.real(), C = p2.real() * p3.imag() - p3.real() * p2.imag();
 	return abs(A * p1.real() + B * p1.imag() + C) / sqrt(A * A + B * B);
